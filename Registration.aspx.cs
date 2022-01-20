@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Drawing;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -94,7 +95,7 @@ namespace SITConnect
             if (password.Length < 12)
             {
                 pwdchecker.ControlStyle.ForeColor = System.Drawing.Color.Red;
-                pwdchecker.Text = "Length shorter than 12";
+                pwdchecker.Text = "Minimum length 12 characters";
                 return false;
             }
 
@@ -203,7 +204,7 @@ namespace SITConnect
             RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
             byte[] saltByte = new byte[8];
 
-            //Fills array of bytes with a cryptographically strong sequence of random values.      rng.GetBytes(saltByte); 
+            //Fills array of bytes with a cryptographically strong sequence of random values. rng.GetBytes(saltByte); 
             salt = Convert.ToBase64String(saltByte);
 
             SHA512Managed hashing = new SHA512Managed();
