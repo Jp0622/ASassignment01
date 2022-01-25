@@ -88,7 +88,7 @@
             return false;
         }
         //Special character validation
-        if (password.search(/[\.@#\$%&]/) == -1) {
+        if (password.search(/[!()\.@#\$%&]/) == -1) {
 
             document.getElementById("pwdchecker").innerHTML = "Require special characters";
             document.getElementById("pwdchecker").style.color = "red";

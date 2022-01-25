@@ -94,12 +94,12 @@ namespace SITConnect
                     if (dbSalt != null && dbSalt.Length > 0 && dbHash != null && dbHash.Length > 0)
                     {
 
-                        //判断账户是否锁定
+                        //check if account is locked
                         if (islock(Account))
 
                         {
                             ErrorMsg.ForeColor = System.Drawing.Color.Red;
-                            ErrorMsg.Text = "账户已经锁定无法登陆";
+                            ErrorMsg.Text = "Account is locked";
                             return;
                         }
 
@@ -191,7 +191,7 @@ namespace SITConnect
 
         }
         /// <summary>
-        /// 返回账户是否锁定
+        /// go back to account lock checker
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
@@ -248,7 +248,7 @@ namespace SITConnect
 
         }
 
-        //登陆错误执行的操作
+        //error login function
         private void erroLogin(string email)
         {
 
