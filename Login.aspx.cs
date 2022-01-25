@@ -67,10 +67,10 @@ namespace SITConnect
                 throw ex;
             }
         }
-      
+
         protected void btn_Login_Click(object sender, EventArgs e)
         {
-           
+
             if (ValidateCaptcha())
             {   //Login
                 var Account = Email.Text.Trim();
@@ -85,8 +85,8 @@ namespace SITConnect
 
                 SHA512Managed hashing = new SHA512Managed();
 
-              
-               
+
+
                 string dbHash = getDBHash(Account);
                 string dbSalt = getDBSalt(Account);
                 try
@@ -110,7 +110,50 @@ namespace SITConnect
 
                         if (userHash.Equals(dbHash))
                         {
-                            Session["Email"] = Account;
+                            var UserID = 0;
+                            using (SqlConnection connection = new SqlConnection(MYDBConnectionString))
+                            {
+                                string sql = "select UserID FROM Account WHERE Email=@Email";
+                                SqlCommand command = new SqlCommand(sql, connection);
+                                command.Parameters.AddWithValue("@Email", Account);
+                                try
+                                {
+                                    connection.Open();
+                                    using (SqlDataReader reader = command.ExecuteReader())
+                                    {
+
+                                        while (reader.Read())
+                                        {
+
+                                            if (reader["UserID"] != null)
+                                            {
+                                                if (reader["UserID"] != DBNull.Value)
+                                                {
+                                                    UserID = Convert.ToInt32(reader["UserID"].ToString());
+
+                                                }
+
+
+                                            }
+                                        }
+
+
+                                    }
+
+
+                                }
+                                catch (Exception ex)
+                                {
+                                    throw new Exception(ex.ToString());
+                                }
+
+                                finally { connection.Close(); }
+                            }
+
+
+
+
+                            Session["UserID"] = UserID;
                             Response.Redirect("HomePage.aspx", false);
                         }
                         else
@@ -141,9 +184,6 @@ namespace SITConnect
             }
             else
             {
-                ErrorMsg.ForeColor = System.Drawing.Color.Red;
-                ErrorMsg.Text = "ValidateCaptcha Error!!";
-                return;
             }
 
 
@@ -186,7 +226,7 @@ namespace SITConnect
 
 
                     }
-       
+
 
 
 
@@ -196,9 +236,10 @@ namespace SITConnect
                     throw new Exception(ex.ToString());
                 }
 
-                finally { 
+                finally
+                {
                     connection.Close();
-                    
+
 
                 }
                 return flag;
@@ -223,23 +264,23 @@ namespace SITConnect
                     connection.Open();
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        
+
                         while (reader.Read())
                         {
-                          
+
                             if (reader["ErrorLoginCount"] != null)
                             {
                                 if (reader["ErrorLoginCount"] != DBNull.Value)
                                 {
                                     count = Convert.ToInt32(reader["ErrorLoginCount"].ToString());
-                                   
+
                                 }
 
 
                             }
                         }
-                   
-                    
+
+
                     }
                     if (count >= 3)
                     {
@@ -265,6 +306,63 @@ namespace SITConnect
                         cmd.ExecuteNonQuery();
 
                     }
+
+
+
+
+
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.ToString());
+                }
+
+                finally { connection.Close(); }
+            }
+
+            //执行审计日志
+            var UserID = 0;
+            using (SqlConnection connection = new SqlConnection(MYDBConnectionString))
+            {
+                string sql = "select UserID FROM Account WHERE Email=@Email";
+                SqlCommand command = new SqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@Email", email);
+                try
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+
+                        while (reader.Read())
+                        {
+
+                            if (reader["UserID"] != null)
+                            {
+                                if (reader["UserID"] != DBNull.Value)
+                                {
+                                    UserID = Convert.ToInt32(reader["UserID"].ToString());
+
+                                }
+
+
+                            }
+                        }
+
+
+                    }
+
+
+                    SqlCommand cmd = new SqlCommand("insert into AUDITLOG (UserID,Time,Event,Change) " +
+                        "values (@UserID,@Time,@Event,@Change)", connection);
+                    cmd.CommandType = CommandType.Text;
+
+                    cmd.Parameters.AddWithValue("@UserID", UserID);
+                    cmd.Parameters.AddWithValue("@Time", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@Event", "登录");
+                    cmd.Parameters.AddWithValue("@Change", "登录失败");
+
+                    cmd.ExecuteNonQuery();
+
 
 
 

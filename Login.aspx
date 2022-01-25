@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="SITConnect.Login" %>
+﻿ <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="SITConnect.Login" %>
 
 <!DOCTYPE html>
 
@@ -30,6 +30,9 @@
             </div>
             <div>
                 <asp:Button runat="server" Text="Login" ID="btn_Login" OnClick="btn_Login_Click" />
+            </div>
+             <div>
+                <asp:LinkButton ID="btn_reg" Text="Registration" PostBackUrl="~/Registration.aspx" runat="server"></asp:LinkButton>
             </div>
          
         </div>

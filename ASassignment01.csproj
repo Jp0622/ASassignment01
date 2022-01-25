@@ -71,12 +71,29 @@
     <Content Include="App_Data\SITConnect_log.ldf">
       <DependentUpon>SITConnect.mdf</DependentUpon>
     </Content>
+    <Content Include="AuditLog.aspx" />
+    <Content Include="ChangePassWord.aspx" />
+    <Content Include="CustomError\HTTP404.html" />
     <Content Include="HomePage.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Registration.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuditLog.aspx.cs">
+      <DependentUpon>AuditLog.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AuditLog.aspx.designer.cs">
+      <DependentUpon>AuditLog.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ChangePassWord.aspx.cs">
+      <DependentUpon>ChangePassWord.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ChangePassWord.aspx.designer.cs">
+      <DependentUpon>ChangePassWord.aspx</DependentUpon>
+    </Compile>
     <Compile Include="HomePage.aspx.cs">
       <DependentUpon>HomePage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

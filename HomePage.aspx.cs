@@ -13,11 +13,9 @@ namespace SITConnect
         {
 
 
-            if (Session["Email"] == null)
+            if (Session["UserID"] == null)
             {
-                //if not logged in, go back to index page
-                Response.StatusCode = 403;
-                Response.End();
+                Response.Redirect("Login.aspx");
             }
             else
             { 

@@ -65,7 +65,68 @@ namespace SITConnect
                 }
                 if (count == 1)
                 {
-                    Session["Email"] = Email.Text.Trim();
+                    //密码变更记录
+
+                    var UserID = 0;
+                    using (SqlConnection connection = new SqlConnection(MYDBConnectionString))
+                    {
+                        string sql = "select UserID FROM Account WHERE Email=@Email";
+                        SqlCommand command = new SqlCommand(sql, connection);
+                        command.Parameters.AddWithValue("@Email", Email.Text.Trim());
+                        try
+                        {
+                            connection.Open();
+                            using (SqlDataReader reader = command.ExecuteReader())
+                            {
+
+                                while (reader.Read())
+                                {
+
+                                    if (reader["UserID"] != null)
+                                    {
+                                        if (reader["UserID"] != DBNull.Value)
+                                        {
+                                            UserID = Convert.ToInt32(reader["UserID"].ToString());
+
+                                        }
+
+
+                                    }
+                                }
+
+
+                            }
+
+
+                            SqlCommand cmd = new SqlCommand("insert into PASSWORDCHANGE (UserID,PasswordHash,PasswordSalt) " +
+                                "values (@UserID,@PasswordHash,@PasswordSalt)", connection);
+                            cmd.CommandType = CommandType.Text;
+
+                            cmd.Parameters.AddWithValue("@UserID", UserID);
+                            cmd.Parameters.AddWithValue("@PasswordHash", finalHash);
+                            cmd.Parameters.AddWithValue("@PasswordSalt", salt);
+
+                            cmd.ExecuteNonQuery();
+
+
+
+
+
+
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new Exception(ex.ToString());
+                        }
+
+                        finally { connection.Close(); }
+                    }
+
+
+
+
+
+                    Session["UserID"] = UserID;
                     Response.Redirect("HomePage.aspx", false);
                 }
                 else
