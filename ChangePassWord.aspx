@@ -40,10 +40,10 @@
 </body>
 </html>
 <script>
-    //密码 校验
+    //Password validation
     function passwordvalidate() {
         var password = document.getElementById('<%=PassWord.ClientID%>').value;
-        //长度校验
+        //Length
         if (password.length < 12) {
 
             document.getElementById("pwdchecker").innerHTML = "Length shorter than 12!";
@@ -51,28 +51,28 @@
             return false;
 
         }
-        //数字校验
+        //Number
         if (password.search(/[0-9]/) == -1) {
 
             document.getElementById("pwdchecker").innerHTML = "Require number!";
             document.getElementById("pwdchecker").style.color = "red";
             return false;
         }
-        //大写字母校验
+        //Cap
         if (password.search(/[A-Z]/) == -1) {
 
             document.getElementById("pwdchecker").innerHTML = "Require capital letters!";
             document.getElementById("pwdchecker").style.color = "red";
             return false;
         }
-        //小写字母校验
+        //Small
         if (password.search(/[a-z]/) == -1) {
 
             document.getElementById("pwdchecker").innerHTML = "Require small letters!";
             document.getElementById("pwdchecker").style.color = "red";
             return false;
         }
-        //特殊字符校验
+        //Special
         if (password.search(/[\!<>,.@#\$%&]/) == -1) {
 
             document.getElementById("pwdchecker").innerHTML = "Require special characters!";
