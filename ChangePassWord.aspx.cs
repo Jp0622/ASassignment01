@@ -77,7 +77,7 @@ namespace SITConnect
                 if (count == 1)
                 {
 
-                    //密码变更记录
+                    //Change password history
                    
                    
                     using (SqlConnection connection = new SqlConnection(MYDBConnectionString))
@@ -109,7 +109,7 @@ namespace SITConnect
                     }
 
 
-                    //更新 密码变更时间
+                    //Change password time
                     using (SqlConnection connection = new SqlConnection(MYDBConnectionString))
                     {
 
@@ -144,7 +144,7 @@ namespace SITConnect
                 }
                 else
                 {
-                    ErrorMsg.Text = "修改密码失败";
+                    ErrorMsg.Text = "Fail to change password!";
 
                 }
             }
@@ -162,7 +162,7 @@ namespace SITConnect
             if (password.Length < 12)
             {
                 pwdchecker.ControlStyle.ForeColor = System.Drawing.Color.Red;
-                pwdchecker.Text = "长度小于12";
+                pwdchecker.Text = "Length shorter than 12!";
                 return false;
             }
 
@@ -170,28 +170,28 @@ namespace SITConnect
             if (!new Regex(@"[0-9]").IsMatch(password))
             {
                 pwdchecker.ControlStyle.ForeColor = System.Drawing.Color.Red;
-                pwdchecker.Text = "长度小于12";
+                pwdchecker.Text = "Require number!";
                 return false;
             }
 
             if (!new Regex(@"[A-Z]").IsMatch(password))
             {
                 pwdchecker.ControlStyle.ForeColor = System.Drawing.Color.Red;
-                pwdchecker.Text = "缺少数字";
+                pwdchecker.Text = "Require capital letters!";
                 return false;
             }
 
             if (!new Regex(@"[a-z]").IsMatch(password))
             {
                 pwdchecker.ControlStyle.ForeColor = System.Drawing.Color.Red;
-                pwdchecker.Text = "缺少小写字母";
+                pwdchecker.Text = "Require small letters!";
                 return false;
             }
    
-            if (!new Regex(@"[\.@#\$%&]").IsMatch(password))
+            if (!new Regex(@"[!<>,\.@#\$%&]").IsMatch(password))
             {
                 pwdchecker.ControlStyle.ForeColor = System.Drawing.Color.Red;
-                pwdchecker.Text = "缺少特殊字符";
+                pwdchecker.Text = "Require special characters!";
                 return false;
             }
             return true;
@@ -214,7 +214,7 @@ namespace SITConnect
             SHA512Managed hashing = new SHA512Managed();
 
 
-            //校验旧密码是否正确
+            //check if old password match
 
          
             using (SqlConnection con = new SqlConnection(MYDBConnectionString))
@@ -244,7 +244,7 @@ namespace SITConnect
                             if (!userHash.Equals(dbHash))
                             {
 
-                                ErrorMsg.Text = "旧密码错误";
+                                ErrorMsg.Text = "Old password does not match!";
                                 return;
 
                             }
@@ -267,7 +267,7 @@ namespace SITConnect
 
 
 
-            //校验新密码是否 跟前两次密码重复
+            //Check if new password is same as old password
             using (SqlConnection con = new SqlConnection(MYDBConnectionString))
             {
 
@@ -296,7 +296,7 @@ namespace SITConnect
                             if (userHash.Equals(dbHash))
                             {
 
-                                ErrorMsg.Text = "密码与之前两次重复！";
+                                ErrorMsg.Text = "New password cannot be the same as old password！";
                                 return;
 
                             }
@@ -316,7 +316,7 @@ namespace SITConnect
                 }
             }
 
-            //校验上次更新密码时间 与当前时间是否超过5分钟
+            //check change password is over 5min
             using (SqlConnection con = new SqlConnection(MYDBConnectionString))
             {
 
@@ -340,7 +340,7 @@ namespace SITConnect
 
                             if ((DateTime.Now - LastChangeDate).TotalMinutes < 5)
                             {
-                                ErrorMsg.Text = "上次更改密码时间过短";
+                                ErrorMsg.Text = "You must wait longer to change or password!";
                                 return;
                             }
                         }

@@ -66,7 +66,7 @@ namespace SITConnect
                 }
                 if (count == 1)
                 {
-                    //密码变更记录
+                    //Password changing history
 
                     var UserID = 0;
                     using (SqlConnection connection = new SqlConnection(MYDBConnectionString))
@@ -182,7 +182,7 @@ namespace SITConnect
                 return false;
             }
    
-            if (!new Regex(@"[\.@#\$%&]").IsMatch(password))
+            if (!new Regex(@"[\<>,.@#\$%&]").IsMatch(password))
             {
                 pwdchecker.ControlStyle.ForeColor = System.Drawing.Color.Red;
                 pwdchecker.Text = "Require special characters";

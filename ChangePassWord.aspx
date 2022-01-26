@@ -46,7 +46,7 @@
         //长度校验
         if (password.length < 12) {
 
-            document.getElementById("pwdchecker").innerHTML = "长度小于12";
+            document.getElementById("pwdchecker").innerHTML = "Length shorter than 12!";
             document.getElementById("pwdchecker").style.color = "red";
             return false;
 
@@ -54,43 +54,43 @@
         //数字校验
         if (password.search(/[0-9]/) == -1) {
 
-            document.getElementById("pwdchecker").innerHTML = "缺少数字";
+            document.getElementById("pwdchecker").innerHTML = "Require number!";
             document.getElementById("pwdchecker").style.color = "red";
             return false;
         }
         //大写字母校验
         if (password.search(/[A-Z]/) == -1) {
 
-            document.getElementById("pwdchecker").innerHTML = "缺少大写字母";
+            document.getElementById("pwdchecker").innerHTML = "Require capital letters!";
             document.getElementById("pwdchecker").style.color = "red";
             return false;
         }
         //小写字母校验
         if (password.search(/[a-z]/) == -1) {
 
-            document.getElementById("pwdchecker").innerHTML = "缺少小写字母";
+            document.getElementById("pwdchecker").innerHTML = "Require small letters!";
             document.getElementById("pwdchecker").style.color = "red";
             return false;
         }
         //特殊字符校验
-        if (password.search(/[\.@#\$%&]/) == -1) {
+        if (password.search(/[\!<>,.@#\$%&]/) == -1) {
 
-            document.getElementById("pwdchecker").innerHTML = "缺少特殊字符";
+            document.getElementById("pwdchecker").innerHTML = "Require special characters!";
             document.getElementById("pwdchecker").style.color = "red";
             return false;
         }
-        document.getElementById("pwdchecker").innerHTML = "正确";
+        document.getElementById("pwdchecker").innerHTML = "Correct format!";
         document.getElementById("pwdchecker").style.color = "blue";
         return true;
     }
 
     function confirmvalidate() {
         if (document.getElementById('<%=PassWord.ClientID%>').value != document.getElementById('<%=ConfirmPassWord.ClientID%>').value) {
-            document.getElementById("confirmpwdchecker").innerHTML = "两次密码不一致";
+            document.getElementById("confirmpwdchecker").innerHTML = "Password does not match!";
             document.getElementById("confirmpwdchecker").style.color = "red";
             return false;
         }
-        document.getElementById("confirmpwdchecker").innerHTML = "正确";
+        document.getElementById("confirmpwdchecker").innerHTML = "Correct!";
         document.getElementById("confirmpwdchecker").style.color = "blue";
     }
 </script>

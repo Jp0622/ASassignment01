@@ -79,7 +79,7 @@ namespace SITConnect
                 if (string.IsNullOrEmpty(Account) || string.IsNullOrEmpty(Password))
                 {
                     ErrorMsg.ForeColor = System.Drawing.Color.Red;
-                    ErrorMsg.Text = "账户或密码不能为空";
+                    ErrorMsg.Text = "Account or password cannot be empty!";
                     return;
                 }
 
@@ -99,7 +99,7 @@ namespace SITConnect
 
                         {
                             ErrorMsg.ForeColor = System.Drawing.Color.Red;
-                            ErrorMsg.Text = "Account is locked";
+                            ErrorMsg.Text = "Account is locked!";
                             return;
                         }
 
@@ -320,7 +320,7 @@ namespace SITConnect
                 finally { connection.Close(); }
             }
 
-            //执行审计日志
+            //Audit Log
             var UserID = 0;
             using (SqlConnection connection = new SqlConnection(MYDBConnectionString))
             {
@@ -358,8 +358,8 @@ namespace SITConnect
 
                     cmd.Parameters.AddWithValue("@UserID", UserID);
                     cmd.Parameters.AddWithValue("@Time", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@Event", "登录");
-                    cmd.Parameters.AddWithValue("@Change", "登录失败");
+                    cmd.Parameters.AddWithValue("@Event", "Login");
+                    cmd.Parameters.AddWithValue("@Change", "Login failed");
 
                     cmd.ExecuteNonQuery();
 
