@@ -282,9 +282,10 @@ namespace SITConnect
 
 
                     }
+                    //lock account;
                     if (count >= 3)
                     {
-                        //lock account;
+                       
                         SqlCommand cmd = new SqlCommand("Update ACCOUNT SET IsLock=1 WHERE Email=@Email", connection);
                         cmd.CommandType = CommandType.Text;
 

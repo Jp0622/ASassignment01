@@ -214,7 +214,7 @@ namespace SITConnect
             SHA512Managed hashing = new SHA512Managed();
 
 
-            //check if old password match
+            //avoid reuse
 
          
             using (SqlConnection con = new SqlConnection(MYDBConnectionString))
