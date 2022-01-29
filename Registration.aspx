@@ -40,6 +40,11 @@
                 
             </div>
             <div>
+                <asp:Label runat="server" Text="Password Strength:" ></asp:Label>
+            
+                  <asp:Label runat="server" ID="pwdstrong"></asp:Label>
+            </div>
+            <div>
 
                 <asp:Label runat="server" Text="Date of Birth"></asp:Label>
                 <asp:TextBox runat="server" ID="Date" TextMode="Date"></asp:TextBox>
@@ -63,6 +68,8 @@
 
             document.getElementById("pwdchecker").innerHTML = "Length shorter than 12";
             document.getElementById("pwdchecker").style.color = "red";
+            document.getElementById("pwdstrong").innerHTML = "Weak";
+            document.getElementById("pwdstrong").style.color = "red";
             return false;
 
         }
@@ -71,6 +78,8 @@
 
             document.getElementById("pwdchecker").innerHTML = "Require number";
             document.getElementById("pwdchecker").style.color = "red";
+            document.getElementById("pwdstrong").innerHTML = "Weak";
+            document.getElementById("pwdstrong").style.color = "red";
             return false;
         }
         //Cap letter validation
@@ -78,6 +87,8 @@
 
             document.getElementById("pwdchecker").innerHTML = "Require capital letters";
             document.getElementById("pwdchecker").style.color = "red";
+            document.getElementById("pwdstrong").innerHTML = "Weak";
+            document.getElementById("pwdstrong").style.color = "red";
             return false;
         }
         //Small letter validation
@@ -85,6 +96,8 @@
 
             document.getElementById("pwdchecker").innerHTML = "Require small letters";
             document.getElementById("pwdchecker").style.color = "red";
+            document.getElementById("pwdstrong").innerHTML = "Weak";
+            document.getElementById("pwdstrong").style.color = "red";
             return false;
         }
         //Special character validation
@@ -92,10 +105,14 @@
 
             document.getElementById("pwdchecker").innerHTML = "Require special characters";
             document.getElementById("pwdchecker").style.color = "red";
+            document.getElementById("pwdstrong").innerHTML = "Weak";
+            document.getElementById("pwdstrong").style.color = "red";
             return false;
         }
         document.getElementById("pwdchecker").innerHTML = "Correct";
         document.getElementById("pwdchecker").style.color = "blue";
+        document.getElementById("pwdstrong").innerHTML = "Strong";
+        document.getElementById("pwdstrong").style.color = "red";
         return true;
     }
     //if email matches

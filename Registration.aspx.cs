@@ -35,8 +35,8 @@ namespace SITConnect
                  
                   
                     using (SqlCommand cmd = new SqlCommand("INSERT INTO " +
-                        "Account(FirstName,LastName,Email,PasswordHash,PasswordSalt,IV,[Key],IsLock,ErrorLoginCount,DateofBirth,ImgUrl,[Card])" +
-                        " VALUES(@FirstName, @LastName,@Email,@PasswordHash,@PasswordSalt,@IV,@Key,@IsLock,@ErrorLoginCount,@DateofBirth,@ImgUrl,@Card)"))
+                        "Account(FirstName,LastName,Email,PasswordHash,PasswordSalt,IV,[Key],IsLock,ErrorLoginCount,DateofBirth,ImgUrl,[Card],LastChangeDate)" +
+                        " VALUES(@FirstName, @LastName,@Email,@PasswordHash,@PasswordSalt,@IV,@Key,@IsLock,@ErrorLoginCount,@DateofBirth,@ImgUrl,@Card,@LastChangeDate)"))
                     {
                         using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
@@ -55,6 +55,7 @@ namespace SITConnect
                             cmd.Parameters.AddWithValue("@DateofBirth",Date.Text.Trim());
                             cmd.Parameters.AddWithValue("@ImgUrl",imgurl);
                             cmd.Parameters.AddWithValue("@Card", Convert.ToBase64String( encryptData(Card.Text.Trim())));
+                            cmd.Parameters.AddWithValue("@LastChangeDate", DateTime.Now);
                             cmd.Connection = con; 
                             
                             con.Open();
